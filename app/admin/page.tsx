@@ -66,7 +66,7 @@ export default function AdminPage() {
     { key: "Double Step Boom Type", value: "" },
     { key: "Second Boom Stroke Length", value: "6 ft" },
     { key: "Crane Weight Capacity", value: "2 Ton" },
-    { key: "No of Cylinders", value: "3" },
+    { key: "No. of Cylinders", value: "3" },
     { key: "All Hoses are 4*P Type", value: "" },
     { key: "Painting and Accessories", value: "" },
   ])
@@ -97,6 +97,14 @@ export default function AdminPage() {
   const handleSectionChange = (sectionId: string) => {
     setActiveSection(sectionId)
     setIsMobileMenuOpen(false) // Close mobile menu when section changes
+
+    // Directly open dialogs for certain sections
+    if (sectionId === "quotation") {
+      setShowQuotationDialog(true)
+    } else if (sectionId === "add-machine") {
+      setEditingMachine(null)
+      setShowMachineDialog(true)
+    }
   }
 
   const handleAddSpec = () => setKeySpecsQ([...keySpecsQ, { key: "", value: "" }])
@@ -248,27 +256,18 @@ export default function AdminPage() {
               {activeSection === "quotation" && (
                 <div className="space-y-4">
                   <h2 className="text-xl lg:text-2xl font-bold">Generate Quotation</h2>
-                  <Button
-                    className="bg-[#C62828] text-white w-full sm:w-auto"
-                    onClick={() => setShowQuotationDialog(true)}
-                  >
-                    Generate Quotation
-                  </Button>
+                  <p className="text-gray-600 dark:text-gray-400">
+                    Click on "Quotation" from the navigation to generate a new quotation.
+                  </p>
                 </div>
               )}
 
               {activeSection === "add-machine" && (
                 <div className="space-y-4">
                   <h2 className="text-xl lg:text-2xl font-bold">Add New Machine</h2>
-                  <Button
-                    className="bg-[#C62828] text-white w-full sm:w-auto"
-                    onClick={() => {
-                      setEditingMachine(null)
-                      setShowMachineDialog(true)
-                    }}
-                  >
-                    <Plus className="w-4 h-4 mr-2" /> Add New Machine
-                  </Button>
+                  <p className="text-gray-600 dark:text-gray-400">
+                    Click on "Add Machine" from the navigation to add a new machine.
+                  </p>
                 </div>
               )}
 
