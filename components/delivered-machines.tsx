@@ -249,7 +249,7 @@ export function DeliveredMachines({ onFullscreenChange }: DeliveredMachinesProps
           <div className="inline-flex items-center gap-4 bg-gray-50 px-6 py-4 rounded-lg border border-gray-200">
             <CheckCircle className="w-8 h-8 text-green-600" />
             <div className="text-left">
-              <p className="font-semibold text-black">{deliveredMachines.length}+ Machines Delivered</p>
+              <p className="font-semibold text-black">{deliveredMachines.length + 50 }+ Machines Delivered</p>
               <p className="text-gray-600 text-sm">Across 10+ States in India</p>
             </div>
           </div>

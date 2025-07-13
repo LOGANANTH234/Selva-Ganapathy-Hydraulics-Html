@@ -6,24 +6,25 @@ import Link from "next/link"
 
 const categories = [
   {
+    id: "tractor",
+    title: "Tractor Based Machines",
+    description: "Heavy-duty machines designed to work with tractors for maximum power and field-ready wood processing",
+    icon: Truck,
+    image: "/images/machines/tractor.png",
+    link: "/tractor-machines",
+    buttonText: "View Tractor Based Machines",
+  },
+  {
     id: "electric",
     title: "Electric Motor Machines",
     description:
       "High-efficiency machines powered by electric motors for consistent performance and precise wood processing operations",
     icon: Zap,
-    image: "/images/machines/blue-woodbreaker.png",
+    image: "/images/machines/electric.png",
     link: "/electric-machines",
     buttonText: "View Electric Motor Machines",
   },
-  {
-    id: "tractor",
-    title: "Tractor Based Machines",
-    description: "Heavy-duty machines designed to work with tractors for maximum power and field-ready wood processing",
-    icon: Truck,
-    image: "/images/machines/orange-woodbreaker-1.png",
-    link: "/tractor-machines",
-    buttonText: "View Tractor Based Machines",
-  },
+  
 ]
 
 export function MachineCategories() {
