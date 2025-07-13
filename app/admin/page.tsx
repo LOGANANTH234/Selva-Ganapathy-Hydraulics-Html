@@ -66,7 +66,7 @@ export default function AdminPage() {
     { key: "Double Step Boom Type", value: "" },
     { key: "Second Boom Stroke Length", value: "6 ft" },
     { key: "Crane Weight Capacity", value: "2 Ton" },
-    { key: "No. of Cylinders", value: "3" },
+    { key: "No of Cylinders", value: "3" },
     { key: "All Hoses are 4*P Type", value: "" },
     { key: "Painting and Accessories", value: "" },
   ])

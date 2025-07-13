@@ -72,7 +72,7 @@ export function MachineFormDialog({ isOpen, onClose, onSuccess, editingMachine }
   { key: "Boom Type", value: "Double Step" },
   { key: "Second Boom Stroke", value: "6 ft" },
   { key: "Crane Weight Capacity", value: "2 Ton" },
-  { key: "No. of Cylinders", value: "3 Nos" },
+  { key: "No of Cylinders", value: "3 Nos" },
   { key: "All Hoses", value: "4XP Type" },
   { key: "Painting and Accessories", value: "Included" },
 ])
@@ -154,7 +154,7 @@ useEffect(() => {
   { key: "Boom Type", value: "Double Step" },
   { key: "Second Boom Stroke", value: "6 ft" },
   { key: "Crane Weight Capacity", value: "2 Ton" },
-  { key: "No. of Cylinders", value: "3 Nos" },
+  { key: "No of Cylinders", value: "3 Nos" },
   { key: "All Hoses", value: "4XP Type" },
   { key: "Painting and Accessories", value: "Included" }
 ])
