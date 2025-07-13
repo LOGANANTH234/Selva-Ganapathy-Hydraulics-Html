@@ -35,7 +35,7 @@ const API_BASE_URL = "https://selva-ganapathy-hydraulics-zl35.onrender.com/api"
 
 export default function AdminPage() {
   const router = useRouter()
-  const [activeSection, setActiveSection] = useState("quotation")
+  const [activeSection, setActiveSection] = useState("manage-machines")
   const [refreshTrigger, setRefreshTrigger] = useState(0)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
