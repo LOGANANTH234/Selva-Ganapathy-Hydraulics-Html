@@ -53,7 +53,6 @@ export async function addNewMachine(machineData: MachineRequest): Promise<ApiRes
 // Update machine
 export async function updateMachine(id: string, machineData: MachineRequest): Promise<ApiResponse<MachineResponse>> {
   try {
-    console.log(machineData.videoLink);
     const response = await fetch(`${API_BASE_URL}/machines/updateMachine/${id}`, {
       method: "PUT",
       headers: {

@@ -396,10 +396,20 @@ useEffect(() => {
     setLoading(true)
     try {
       let response
+      if (formData.keySpecs && typeof formData.keySpecs === "object") {
+  const sanitizedKeySpecs: Record<string, string> = {}
+
+  Object.entries(formData.keySpecs).forEach(([key, value]) => {
+    const sanitizedKey = key.replace(/\./g, "_") // Replace all dots with underscores
+    sanitizedKeySpecs[sanitizedKey] = value
+  })
+
+  formData.keySpecs = sanitizedKeySpecs
+}
+
       if (editingMachine) {
         response = await updateMachine(editingMachine.id, formData)
       } else {
-        console.log(formData)
         response = await addNewMachine(formData)
       }
 
@@ -684,20 +694,27 @@ useEffect(() => {
 
           {/* Total Price */}
           <div className="space-y-2">
-            <Label htmlFor="totalPrice" className="text-sm font-medium text-gray-700">
-              Total Price *
-            </Label>
-            <Input
-              id="totalPrice"
-              type="text"
-              value={formData.totalPrice}
-              onChange={(e) => handleInputChange("totalPrice", e.target.value)}
-              placeholder="Enter total price (e.g., ₹2,50,000)"
-              className={`border-gray-300 focus:border-[#C62828] focus:ring-[#C62828] ${errors.totalPrice ? "border-red-500" : ""
-                }`}
-            />
-            {errors.totalPrice && <p className="text-red-500 text-sm">{errors.totalPrice}</p>}
-          </div>
+  <Label htmlFor="totalPrice" className="text-sm font-medium text-gray-700">
+    Total Price *
+  </Label>
+  <Input
+    id="totalPrice"
+    type="text"
+    value={formData.totalPrice}
+    onChange={(e) => {
+      const numericValue = e.target.value.replace(/\D/g, ""); // Remove non-digits
+      handleInputChange("totalPrice", numericValue);
+    }}
+    placeholder="Enter total price"
+    className={`border-gray-300 focus:border-[#C62828] focus:ring-[#C62828] ${
+      errors.totalPrice ? "border-red-500" : ""
+    }`}
+  />
+  {errors.totalPrice && (
+    <p className="text-red-500 text-sm">{errors.totalPrice}</p>
+  )}
+</div>
+
 
           {/* Videos */}
           <div className="space-y-2">
