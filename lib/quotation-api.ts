@@ -1,5 +1,5 @@
 // Quotation API functions
-const API_BASE_URL = "https://selva-ganapathy-hydraulics-zl35.onrender.com/api"
+const API_BASE_URL = "https://selvaganapathyhydraulics-1.onrender.com/api"
 
 export interface QuotationRequest {
   name: string

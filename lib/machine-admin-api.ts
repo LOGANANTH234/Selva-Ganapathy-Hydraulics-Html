@@ -1,5 +1,5 @@
 // Admin API functions for managing machines
-const API_BASE_URL = "https://selva-ganapathy-hydraulics-zl35.onrender.com/api"
+const API_BASE_URL = "https://selvaganapathyhydraulics-1.onrender.com/api"
 
 // Add totalPrice field to MachineRequest interface
 export interface MachineRequest {
