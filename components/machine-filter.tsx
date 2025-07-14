@@ -20,7 +20,7 @@ export function MachineFilter({ types, selectedType, onTypeChange }: MachineFilt
       <Select
         value={selectedType}
         onValueChange={(newValue) => {
-          console.log("Selected Type:", newValue)
+        
           onTypeChange(newValue)
         }}
       >
@@ -38,7 +38,7 @@ export function MachineFilter({ types, selectedType, onTypeChange }: MachineFilt
             .filter((type, index, self) => self.indexOf(type) === index) // remove duplicates
             .map((type) => {
               if (type === selectedType.trim()) {
-                console.log("Matched Selected Type:", type)
+                
               }
               return (
                 <SelectItem

@@ -53,23 +53,22 @@ export default function MachinePage() {
       try {
         // Decode the machine name from URL - this is the actual machine name now
         const machineName = decodeURIComponent(machineId)
-        console.log("Fetching machine details for:", machineName)
 
         // Try electric first, then tractor
         let response = await getMachineDetails(machineName, "electric")
-        console.log("Electric response:", response)
+       
 
         if (response.error || !response.data || !response.data.name) {
-          console.log("Trying tractor...")
+        
           response = await getMachineDetails(machineName, "tractor")
-          console.log("Tractor response:", response)
+        
         }
 
         if (response.error || !response.data || !response.data.name) {
           throw new Error(response.error || "Machine not found")
         }
 
-        console.log("Machine data:", response.data)
+       
         setMachine(response.data)
         setHasLoaded(true) // Mark as loaded to prevent repeated calls
 
@@ -200,7 +199,7 @@ export default function MachinePage() {
   }
 
    const openVideoFullscreen = (url: string) => {
-    console.log(url)
+   
     const videoId = extractYouTubeVideoId(url);
     setVideoUrl(`https://www.youtube.com/embed/${videoId}?autoplay=1`);
   
@@ -209,7 +208,7 @@ export default function MachinePage() {
 
   const extractYouTubeVideoId = (url: string): string => {
    try {
-    console.log("Input URL:", url);
+   
     const parsedUrl = new URL(url.trim());
     const hostname = parsedUrl.hostname;
     const pathname = parsedUrl.pathname;
@@ -414,7 +413,7 @@ export default function MachinePage() {
     </h2>
     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
       {Object.entries(machine.videoLink).map(([_, videoUrl], index) => {
-        const videoIdMatch = videoUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/))([^?&]+)/);
+       const videoIdMatch = videoUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/|shorts\/))([^?&/]+)/);
         const videoId = videoIdMatch ? videoIdMatch[1] : null;
         const thumbnailUrl = videoId
           ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`

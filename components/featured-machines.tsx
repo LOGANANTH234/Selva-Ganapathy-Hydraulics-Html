@@ -54,7 +54,7 @@ export function FeaturedMachines() {
 
   const generateQuotation = (machineId: string) => {
     // TODO: Integrate with backend API for PDF generation
-    console.log(`Generating quotation for ${machineId}`)
+    
     alert("Quotation feature will be integrated with backend API soon!")
   }
 

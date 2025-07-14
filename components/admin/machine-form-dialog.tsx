@@ -114,7 +114,7 @@ useEffect(() => {
           totalPrice: editingMachine.totalPrice || "", // Add this field
         })
         setImagePreviews(editingMachine.images || [])
-        console.log(editingMachine)
+       
         // Convert keySpecs object to array
         const specsArray = Object.entries(editingMachine.keySpecs || {}).map(([key, value]) => ({ key, value }))
         setKeySpecs(specsArray.length > 0 ? specsArray : [{ key: "", value: "" }])

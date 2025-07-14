@@ -99,7 +99,7 @@ export async function getMachineDetails(
   try {
     const encodedName = encodeURIComponent(name)
     const url = `${API_BASE_URL}/machines/getMachineDetails?name=${encodedName}&parentType=${parentType}`
-    console.log("Fetching from URL:", url)
+   
 
     const response = await fetch(url)
 
@@ -108,7 +108,7 @@ export async function getMachineDetails(
     }
 
     const data = await response.json()
-    console.log("API Response:", data)
+   
 
     // API returns an array, we need the first item
     if (Array.isArray(data) && data.length > 0) {
