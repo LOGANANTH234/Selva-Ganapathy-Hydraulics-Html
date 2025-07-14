@@ -208,27 +208,24 @@ export default function MachinePage() {
   };
 
   const extractYouTubeVideoId = (url: string): string => {
-  try {
-    const parsedUrl = new URL(url);
+   try {
+    console.log("Input URL:", url);
+    const parsedUrl = new URL(url.trim());
     const hostname = parsedUrl.hostname;
     const pathname = parsedUrl.pathname;
 
-    // 1. Handle https://www.youtube.com/watch?v=VIDEO_ID
     if (hostname.includes("youtube.com") && parsedUrl.searchParams.get("v")) {
       return parsedUrl.searchParams.get("v") || "";
     }
 
-    // 2. Handle https://youtu.be/VIDEO_ID or https://youtu.be/VIDEO_ID?t=10
     if (hostname === "youtu.be") {
       return pathname.slice(1).split("?")[0];
     }
 
-    // 3. Handle https://www.youtube.com/embed/VIDEO_ID
     if (pathname.startsWith("/embed/")) {
       return pathname.split("/embed/")[1].split("/")[0];
     }
 
-    // 4. Handle https://www.youtube.com/shorts/VIDEO_ID
     if (pathname.startsWith("/shorts/")) {
       return pathname.split("/shorts/")[1].split("/")[0];
     }
