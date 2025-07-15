@@ -183,13 +183,6 @@ useEffect(() => {
       return
     }
 
-    // Validate file sizes (max 5MB each)
-    const oversizedFiles = files.filter((file) => file.size > 5 * 1024 * 1024)
-    if (oversizedFiles.length > 0) {
-      setErrors((prev) => ({ ...prev, images: "Each image should be less than 5MB" }))
-      return
-    }
-
     try {
       const base64Images = await Promise.all(files.map((file) => convertFileToBase64(file)))
       const newImages = [...formData.images, ...base64Images]
