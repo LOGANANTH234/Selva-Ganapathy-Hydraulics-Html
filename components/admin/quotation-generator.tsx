@@ -698,10 +698,10 @@ const INITIAL_ITEMS: QuotationItem[] = [
     diagram: {
       shape: "lbracket",
       dims: {
-        top: "3in",
-        height: "3in",
-        bottom: "6in",
-        length: "66in"
+        leftH: "3in",
+        rightH: "3in",
+        inner: "6in",
+        bottomW: "66in"
       }
     }
   },
