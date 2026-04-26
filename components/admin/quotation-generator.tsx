@@ -696,7 +696,7 @@ const INITIAL_ITEMS: QuotationItem[] = [
     desc: "",
     count: "2", // corrected from image
     diagram: {
-      shape: "channel",
+      shape: "lbracket",
       dims: {
         top: "3in",
         height: "3in",
