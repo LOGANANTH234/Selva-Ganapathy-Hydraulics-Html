@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
-import { Plus, Settings, Play, FileText, Truck, Phone, Trash2, Menu, X } from "lucide-react"
+import { Plus, Settings, Play, FileText, Truck, Phone, Trash2, Menu, X, ClipboardList } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -28,6 +28,7 @@ import { MachineFormDialog } from "@/components/admin/machine-form-dialog"
 import { MachineListView } from "@/components/admin/machine-list-view"
 import { DeliveredMachinesManagement } from "@/components/admin/delivered-machines-management"
 import { VideoGallery } from "@/components/video-gallery"
+import QuotationOrderForm from "@/components/admin/quotation-generator"
 import type { MachineResponse } from "@/lib/machine-admin-api"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 
@@ -75,6 +76,7 @@ export default function AdminPage() {
 
   const navigationItems = [
     { id: "quotation", icon: <FileText className="w-5 h-5" />, label: "Quotation" },
+    { id: "order-quotation", icon: <ClipboardList className="w-5 h-5" />, label: "Generate Quotation for Order" },
     { id: "add-machine", icon: <Plus className="w-5 h-5" />, label: "Add Machine" },
     { id: "manage-machines", icon: <Settings className="w-5 h-5" />, label: "Manage Machines" },
     { id: "videos", icon: <Play className="w-5 h-5" />, label: "Videos" },
@@ -96,9 +98,8 @@ export default function AdminPage() {
 
   const handleSectionChange = (sectionId: string) => {
     setActiveSection(sectionId)
-    setIsMobileMenuOpen(false) // Close mobile menu when section changes
+    setIsMobileMenuOpen(false)
 
-    // Directly open dialogs for certain sections
     if (sectionId === "quotation") {
       setShowQuotationDialog(true)
     } else if (sectionId === "add-machine") {
@@ -262,6 +263,18 @@ export default function AdminPage() {
                 </div>
               )}
 
+              {activeSection === "order-quotation" && (
+                <div className="space-y-4">
+                  <div>
+                    <h2 className="text-xl lg:text-2xl font-bold">Generate Quotation for Order</h2>
+                    <p className="text-gray-600 dark:text-gray-400 mt-1">
+                      Fill in the order details below to generate a formatted PDF quotation in the SGH letterhead style.
+                    </p>
+                  </div>
+                  <QuotationOrderForm />
+                </div>
+              )}
+
               {activeSection === "add-machine" && (
                 <div className="space-y-4">
                   <h2 className="text-xl lg:text-2xl font-bold">Add New Machine</h2>
@@ -394,9 +407,7 @@ export default function AdminPage() {
                   value={totalPriceQ}
                   onChange={(e) => {
                     const val = e.target.value
-                    if (/^\d*$/.test(val)) {
-                      setTotalPriceQ(val)
-                    }
+                    if (/^\d*$/.test(val)) setTotalPriceQ(val)
                   }}
                   className="appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                 />
@@ -411,9 +422,7 @@ export default function AdminPage() {
                   min="1"
                   onChange={(e) => {
                     const val = e.target.value
-                    if (/^\d*$/.test(val)) {
-                      setFirstAdvance(val)
-                    }
+                    if (/^\d*$/.test(val)) setFirstAdvance(val)
                   }}
                   className="appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                 />
@@ -427,9 +436,7 @@ export default function AdminPage() {
                   min="1"
                   onChange={(e) => {
                     const val = e.target.value
-                    if (/^\d*$/.test(val)) {
-                      setSecondAdvance(val)
-                    }
+                    if (/^\d*$/.test(val)) setSecondAdvance(val)
                   }}
                   className="appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                 />
@@ -474,4 +481,4 @@ export default function AdminPage() {
       </main>
     </TooltipProvider>
   )
-}
+}92
