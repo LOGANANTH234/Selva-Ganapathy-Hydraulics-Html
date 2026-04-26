@@ -657,31 +657,76 @@ const formattedDate = `${String(today.getDate()).padStart(2, "0")}/${String(toda
 
 const INITIAL_ITEMS: QuotationItem[] = [
   { id: "1",  sku: "50mm", desc: "3 1/2in x 20in - 2no",        count: "", diagram: null },
-  { id: "2",  sku: "45mm", desc: "1 3/8in x 14Ft - 1no",         count: "", diagram: null },
-  { id: "3",  sku: "40mm", desc: "4in x 7in - 1no",              count: "", diagram: null },
-  { id: "4",  sku: "32mm", desc: "24in x 20in - 1no",            count: "", diagram: null },
-  { id: "5",  sku: "32mm", desc: "24in x 22in - 1no",            count: "", diagram: null },
-  { id: "6",  sku: "32mm", desc: "18in x 15in - 1no",            count: "", diagram: null },
-  { id: "7",  sku: "28mm", desc: "6in x 20in - 2no",             count: "", diagram: null },
-  { id: "8",  sku: "18mm", desc: "24in x 22in - 2no",            count: "", diagram: null },
-  { id: "9",  sku: "18mm", desc: "24in x 15in - 1no",            count: "", diagram: null },
-  { id: "10", sku: "16mm", desc: "18in x 14Ft - 1no",            count: "", diagram: null },
-  { id: "11", sku: "16mm", desc: "5in x 14Ft - 2no",             count: "", diagram: null },
-  { id: "12", sku: "16mm", desc: "7 1/2in x 12 3/4in - 4no",    count: "", diagram: null },
-  { id: "13", sku: "16mm", desc: "8in x 22in - 2no",             count: "", diagram: null },
-  { id: "14", sku: "16mm", desc: "1 1/8in x 22in - 1no",         count: "", diagram: null },
-  { id: "15", sku: "16mm", desc: "15in x 22in - 1no",            count: "", diagram: null },
-  { id: "16", sku: "16mm", desc: "10in x 10in - 1no",            count: "", diagram: null },
-  { id: "17", sku: "16mm", desc: "8in x 8in - 2no",              count: "", diagram: null },
-  { id: "18", sku: "12mm", desc: "8in x 8in - 2no",              count: "", diagram: null },
-  { id: "19", sku: "8mm",  desc: "", count: "1", diagram: { shape: "channel",  dims: { top: "3in", height: '3 3/4in', bottom: "6in", length: '66"' } } },
-  { id: "20", sku: "4mm",  desc: "2' x 4' - 1no",               count: "", diagram: null },
-  { id: "21", sku: "4mm",  desc: "2' x 4' - 1no",               count: "", diagram: null },
-  { id: "22", sku: "3mm",  desc: "", count: "1", diagram: { shape: "lbracket", dims: { leftH: "15 1/2", rightH: "15", inner: "13", bottomW: "36" } } },
-  { id: "23", sku: "3mm",  desc: "14 3/4in x 12 3/4in - 4no",  count: "", diagram: null },
-  { id: "24", sku: "3mm",  desc: "12 3/4in x 36 - 2no",         count: "", diagram: null },
-]
 
+  { id: "2",  sku: "45mm", desc: "18in x 14ft - 1no",           count: "", diagram: null },
+
+  { id: "3",  sku: "40mm", desc: "4in x 7in - 1no",             count: "", diagram: null },
+
+  { id: "4",  sku: "32mm", desc: "24in x 20in - 1no",           count: "", diagram: null },
+  { id: "5",  sku: "32mm", desc: "24in x 22in - 1no",           count: "", diagram: null },
+  { id: "6",  sku: "32mm", desc: "18in x 15in - 1no",           count: "", diagram: null },
+
+  { id: "7",  sku: "28mm", desc: "6in x 20in - 2no",            count: "", diagram: null },
+
+  { id: "8",  sku: "18mm", desc: "24in x 22in - 2no",           count: "", diagram: null },
+  { id: "9",  sku: "18mm", desc: "24in x 15in - 1no",           count: "", diagram: null },
+
+  { id: "10", sku: "16mm", desc: "18in x 14ft - 1no",           count: "", diagram: null },
+  { id: "11", sku: "16mm", desc: "5in x 14ft - 2no",            count: "", diagram: null },
+
+  // corrected fraction values
+  { id: "12", sku: "16mm", desc: "7 1/2in x 12 3/4in - 4no",    count: "", diagram: null },
+
+  { id: "13", sku: "16mm", desc: "8in x 22in - 2no",            count: "", diagram: null },
+
+  // ❌ FIXED: wrong value earlier (1 1/8 → 18in)
+  { id: "14", sku: "16mm", desc: "18in x 22in - 1no",           count: "", diagram: null },
+
+  { id: "15", sku: "16mm", desc: "15in x 22in - 1no",           count: "", diagram: null },
+  { id: "16", sku: "16mm", desc: "10in x 10in - 1no",           count: "", diagram: null },
+
+  // ❌ FIXED: this belongs to 12mm (not 16mm)
+  { id: "17", sku: "12mm", desc: "8in x 8in - 2no",             count: "", diagram: null },
+
+  // ❌ REMOVED duplicate 12mm entry (merged above)
+
+  {
+    id: "18",
+    sku: "8mm",
+    desc: "",
+    count: "2", // corrected from image
+    diagram: {
+      shape: "channel",
+      dims: {
+        top: "3in",
+        height: "3in",
+        bottom: "6in",
+        length: "66in"
+      }
+    }
+  },
+
+  { id: "19", sku: "4mm", desc: "2ft x 4ft - 1no",              count: "", diagram: null },
+
+  {
+    id: "20",
+    sku: "3mm",
+    desc: "",
+    count: "2", // corrected
+    diagram: {
+      shape: "lbracket",
+      dims: {
+        leftH: "15",
+        rightH: "15",
+        inner: "13",
+        bottomW: "36"
+      }
+    }
+  },
+
+  { id: "21", sku: "3mm", desc: "14 3/4 x 12 3/4 - 4no",   count: "", diagram: null },
+  { id: "22", sku: "3mm", desc: "12 3/4 x 36 - 2no",       count: "", diagram: null },
+]
 export default function QuotationGenerator() {
   const [data, setData] = useState<QuotationData>({
     date: formattedDate, machineName: "ABQ", items: INITIAL_ITEMS,
