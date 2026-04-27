@@ -754,15 +754,18 @@ export default function QuotationGenerator() {
           text: `Quotation for ${data.machineName}`
         })
       } else {
-        // Fallback: download the PDF
-        const url = URL.createObjectURL(pdfBlob)
-        const a = document.createElement("a")
-        a.href = url
-        a.download = fileName
-        document.body.appendChild(a)
-        a.click()
-        document.body.removeChild(a)
-        URL.revokeObjectURL(url)
+        // Fallback: download the PDF using data URL (works in mobile apps)
+        const reader = new FileReader()
+        reader.onload = () => {
+          const dataUrl = reader.result as string
+          const a = document.createElement("a")
+          a.href = dataUrl
+          a.download = fileName
+          document.body.appendChild(a)
+          a.click()
+          document.body.removeChild(a)
+        }
+        reader.readAsDataURL(pdfBlob)
       }
     } catch (err) {
       console.error(err); alert("PDF generation failed.")
