@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useState, useRef, useEffect } from "react"
@@ -319,33 +318,33 @@ function renderDiagramHTML(diagram: DiagramData): string {
   const d = diagram.dims
   if (diagram.shape === "channel") {
     return `<svg width="260" height="170" viewBox="0 0 260 170" display="block" xmlns="http://www.w3.org/2000/svg">
-      <text x="130" y="16" text-anchor="middle" font-size="14" fill="#111" font-weight="bold">${d.top || ""}</text>
+      <text x="130" y="16" text-anchor="middle" dominant-baseline="middle" font-size="14" fill="#111" font-weight="bold">${d.top || ""}</text>
       <line x1="78" y1="28" x2="182" y2="28" stroke="#333" stroke-width="2.5"/>
       <line x1="78" y1="28" x2="52" y2="120" stroke="#333" stroke-width="2.5"/>
       <line x1="182" y1="28" x2="208" y2="120" stroke="#333" stroke-width="2.5"/>
       <line x1="38" y1="120" x2="222" y2="120" stroke="#333" stroke-width="2.5"/>
-      <text x="8" y="82" font-size="13" fill="#111" font-weight="bold">${d.height || ""}</text>
-      <text x="130" y="155" text-anchor="middle" font-size="14" fill="#111" font-weight="bold">${d.bottom || ""}</text>
-      <text x="252" y="82" font-size="13" fill="#111" font-weight="bold" text-anchor="end">${d.length || ""}</text>
+      <text x="8" y="74" font-size="13" fill="#111" font-weight="bold" dominant-baseline="middle">${d.height || ""}</text>
+      <text x="130" y="155" text-anchor="middle" dominant-baseline="middle" font-size="14" fill="#111" font-weight="bold">${d.bottom || ""}</text>
+      <text x="252" y="74" font-size="13" fill="#111" font-weight="bold" text-anchor="end" dominant-baseline="middle">${d.length || ""}</text>
     </svg>`
   }
   if (diagram.shape === "lbracket") {
-    // FIXED: left label now centered on lx=80 so it never clips
+    // FIXED: left label now centered on lx=80 so it never clips, with proper baseline alignment
     return `<svg width="340" height="160" viewBox="0 0 340 160" display="block" xmlns="http://www.w3.org/2000/svg">
       <line x1="80" y1="16" x2="80" y2="118" stroke="#222" stroke-width="3"/>
       <line x1="80" y1="118" x2="310" y2="118" stroke="#222" stroke-width="3"/>
       <line x1="200" y1="32" x2="200" y2="118" stroke="#222" stroke-width="3"/>
-      <text x="80" y="72" font-size="13" fill="#444" text-anchor="middle">${d.leftH || ""}</text>
-      <text x="214" y="80" font-size="13" fill="#444" text-anchor="start">${d.rightH || ""}</text>
-      <text x="140" y="148" font-size="13" fill="#444" text-anchor="middle">${d.inner || ""}</text>
-      <text x="256" y="148" font-size="13" fill="#444" text-anchor="middle">${d.bottomW || ""}</text>
+      <text x="73" y="67" font-size="13" fill="#444" text-anchor="end" dominant-baseline="middle">${d.leftH || ""}</text>
+      <text x="214" y="75" font-size="13" fill="#444" text-anchor="start" dominant-baseline="middle">${d.rightH || ""}</text>
+      <text x="140" y="138" font-size="13" fill="#444" text-anchor="middle" dominant-baseline="middle">${d.inner || ""}</text>
+      <text x="256" y="138" font-size="13" fill="#444" text-anchor="middle" dominant-baseline="middle">${d.bottomW || ""}</text>
     </svg>`
   }
   if (diagram.shape === "rect") {
     return `<svg width="200" height="110" viewBox="0 0 200 110" display="block" xmlns="http://www.w3.org/2000/svg">
       <rect x="28" y="14" width="144" height="72" fill="none" stroke="#333" stroke-width="2.5" rx="2"/>
-      <text x="100" y="11" text-anchor="middle" font-size="13" fill="#555" font-weight="bold">${d.width || ""}</text>
-      <text x="182" y="56" font-size="12" fill="#555" font-weight="bold">${d.height || ""}</text>
+      <text x="100" y="11" text-anchor="middle" dominant-baseline="middle" font-size="13" fill="#555" font-weight="bold">${d.width || ""}</text>
+      <text x="182" y="50" font-size="12" fill="#555" font-weight="bold" dominant-baseline="middle">${d.height || ""}</text>
     </svg>`
   }
   if (diagram.shape === "custom") return `<span style="font-size:14px;color:#555;">${d.note || ""}</span>`
@@ -834,10 +833,10 @@ export default function QuotationGenerator() {
                   <div className="grid grid-cols-12 gap-2 px-3 py-2 items-center">
                     <div className="col-span-1 text-xs sm:text-xs font-semibold text-gray-400">{idx + 1}</div>
                     <div className="col-span-2 text-xs sm:text-xs font-semibold text-gray-700 truncate">{item.sku}</div>
-                    <div className="col-span-6 text-xs sm:text-sm">
+                    <div className="col-span-6 text-xs sm:text-sm flex items-center">
                       {item.diagram ? (
-                        <div className="flex items-center justify-start gap-2 sm:gap-3 w-full">
-                          <div className="flex-shrink-0 flex items-center justify-center">
+                        <div className="flex items-start justify-start gap-3 w-full">
+                          <div className="flex-shrink-0 pt-0.5">
                             <DiagramRenderer diagram={item.diagram} size="inline" />
                           </div>
                           <div className="flex flex-col gap-1 justify-start">
