@@ -835,11 +835,11 @@ export default function QuotationGenerator() {
                     <div className="col-span-2 text-xs sm:text-xs font-semibold text-gray-700 truncate">{item.sku}</div>
                     <div className="col-span-6 text-xs sm:text-sm">
                       {item.diagram ? (
-                        <div className="flex items-center gap-2 sm:gap-3">
-                          <div className="flex-shrink-0">
+                        <div className="flex items-center justify-start gap-2 sm:gap-3 w-full">
+                          <div className="flex-shrink-0 flex items-center justify-center">
                             <DiagramRenderer diagram={item.diagram} size="inline" />
                           </div>
-                          <div className="flex flex-col gap-1">
+                          <div className="flex flex-col gap-1 justify-start">
                             <button onClick={() => setDiagModalItem(item)} className="text-xs text-blue-500 hover:text-blue-700 underline text-left">Edit diagram</button>
                             <button onClick={() => removeDiagram(item.id)} className="text-xs text-red-400 hover:text-red-600 text-left">Remove</button>
                           </div>
