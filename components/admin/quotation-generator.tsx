@@ -2,9 +2,174 @@
 
 import { useState, useRef, useEffect } from "react"
 import { Plus, Trash2, Download, Eye, Edit2, X, Check } from "lucide-react"
+// DELETE the entire SGH_LOGO_B64 constant (the long broken string)
+// Replace with:
+const SGH_LOGO_SRC = "/images/logo.png"
 
-const SGH_LOGO_B64 = "/9j/4AAQSkZJRgABAQAASABIAAD/4QBMRXhpZgAATU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAACWKADAAQAAAABAAABaAAAAAD/wAARCAFoAlgDAREAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9sAQwACAgICAgIDAgIDBQMDAwUGBQUFBQYIBgYGBgYICggICAgICAoKCgoKCgoKDAwMDAwMDg4ODg4PDw8PDw8PDw8P/9sAQwECAwMEBAQHBAQHEAsJCxAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQ/90ABABL/9oADAMBAAIRAxEAPwD9/KACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoA/9D9/KACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoA/9H9/KACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoA/9L9/KACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoA/9P9/KACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKAE3L60AGRQBzOoeNPCGkbv7W1uxsdnX7RcxRY/77YUAcxL8a/g5Ids/jvQYz6NqloP5yUAT23xf+E96/l2fjPRbhvSPUrZv5SUAdlp+taRqy7tLvYbtfWGRZB+ak0AamRQAtABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAH//1P38oAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoA/9X9/KACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAz9T1PTtHsptS1a6isrS3XfJNPIscaKO7MxAA+poA+B/i1/wAFOf2SvhWZrSHxM3jDUYtw+zaDGLwEqccXDNHbHn0lJ9utAH5u/Ej/AILY+N74yWvwm8AWOlJjarzq88l45Jxz5MPkhCP+ujj69aAPiHxr/wAFKf2x/G8jrN8QJtGtz92HSoIbIA4xkSogm/8AIh/GgD5e8R/Gj4ueMnkb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oAKACgAoAKACgAoAKACgAoAKACgAoA/9f9/KACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgDn9c8K+GfEsQh8RaRZ6qiAhVurWOYD6bwaAOGl+CXwZmk82XwPoLN9dLtQPyVABQBZtfhN8KbKTzLPwdosT+qadbrz+EYoA7Kw0rS9LjEOmWsNogGAIY1QAf8BApgX6ACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoA/9D9/KACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoA/9H9/KACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoA/9L9/KACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoA/9P9/KACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKAE3L60AGRQBzOoeNPCGkbv7W1uxsdnX7RcxRY/77YUAcxL8a/g5Ids/jvQYz6NqloP5yUAT23xf+E96/l2fjPRbhvSPUrZv5SUAdlp+taRqy7tLvYbtfWGRZB+ak0AamRQAtABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAH//Q/fygAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKA"
+// ─── Share Modal ─────────────────────────────────────────────────────────────
+function ShareModal({ onClose, machineName }: { onClose: () => void; machineName: string }) {
+  const [phone, setPhone] = useState("")
+  const [message, setMessage] = useState(`Hi, please find the quotation for ${machineName} attached.`)
 
+  const handleWhatsAppShare = () => {
+    const cleanPhone = phone.replace(/\D/g, "")
+    const encodedMsg = encodeURIComponent(message)
+    const url = cleanPhone ? `https://wa.me/${cleanPhone}?text=${encodedMsg}` : `https://wa.me/?text=${encodedMsg}`
+    window.open(url, "_blank")
+    onClose()
+  }
+
+  return (
+    <div className="fixed inset-0 bg-black/50 flex items-end sm:items-center justify-center z-50 p-0 sm:p-4">
+      <div className="bg-white rounded-t-2xl sm:rounded-xl shadow-2xl w-full sm:max-w-md max-h-[90vh] overflow-y-auto">
+        <div className="px-5 py-4 border-b border-gray-200 flex items-center justify-between sticky top-0 bg-white z-10">
+          <div>
+            <h2 className="text-base font-bold text-gray-900">Share Quotation</h2>
+            <p className="text-xs text-gray-500">PDF downloaded successfully</p>
+          </div>
+          <button onClick={onClose} className="p-1 hover:bg-gray-100 rounded-lg"><X className="w-5 h-5 text-gray-500" /></button>
+        </div>
+        
+        <div className="p-5 space-y-3">
+          {/* WhatsApp Share Section */}
+          <div className="border border-gray-200 rounded-lg p-4 space-y-3">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-lg bg-[#25D366] flex items-center justify-center flex-shrink-0">
+                <svg viewBox="0 0 24 24" className="w-6 h-6 fill-white">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                </svg>
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-gray-900">Share via WhatsApp</p>
+                <p className="text-xs text-gray-500">Send with message</p>
+              </div>
+            </div>
+            
+            <div>
+              <label className="block text-xs font-medium text-gray-600 mb-1.5">Phone number <span className="text-gray-400">(optional)</span></label>
+              <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="e.g. 919876543210"
+                className="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#25D366]" />
+            </div>
+            
+            <div>
+              <label className="block text-xs font-medium text-gray-600 mb-1.5">Message</label>
+              <textarea value={message} onChange={(e) => setMessage(e.target.value)} rows={3}
+                className="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#25D366] resize-none" />
+            </div>
+            
+            <button onClick={handleWhatsAppShare} className="w-full px-4 py-2.5 bg-[#25D366] text-white rounded-lg text-sm font-semibold hover:bg-[#20BA5A] flex items-center justify-center gap-2">
+              <svg viewBox="0 0 24 24" className="w-4 h-4 fill-white">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+              </svg>
+              Open WhatsApp
+            </button>
+          </div>
+
+          <p className="text-[11px] text-gray-500">Note: WhatsApp doesn't allow direct file sharing from web. Please manually attach the downloaded PDF in the WhatsApp chat.</p>
+        </div>
+
+        <div className="px-5 py-4 border-t border-gray-200 flex gap-3 sticky bottom-0 bg-gray-50">
+          <button onClick={onClose} className="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100">Done</button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+
+
+
+  // Main share menu
+  return (
+    <div className="fixed inset-0 bg-black/50 flex items-end sm:items-center justify-center z-50 p-0 sm:p-4">
+      <div className="bg-white rounded-t-2xl sm:rounded-xl shadow-2xl w-full sm:max-w-sm max-h-[90vh] overflow-y-auto">
+        <div className="px-5 py-4 border-b border-gray-200 flex items-center justify-between sticky top-0 bg-white z-10">
+          <div>
+            <h2 className="text-base font-bold text-gray-900">Share Quotation</h2>
+            <p className="text-xs text-gray-500">PDF ready to share</p>
+          </div>
+          <button onClick={onClose} className="p-1 hover:bg-gray-100 rounded-lg"><X className="w-5 h-5 text-gray-500" /></button>
+        </div>
+        
+        <div className="p-5 space-y-3">
+          <button onClick={() => setStep("whatsapp")} 
+            className="w-full flex items-center gap-4 p-4 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors">
+            <div className="w-12 h-12 rounded-lg bg-[#25D366] flex items-center justify-center flex-shrink-0">
+              <svg viewBox="0 0 24 24" className="w-6 h-6 fill-white">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+              </svg>
+            </div>
+            <div className="flex-1 text-left">
+              <p className="text-sm font-semibold text-gray-900">WhatsApp</p>
+              <p className="text-xs text-gray-500">Send with message</p>
+            </div>
+          </button>
+
+          <button onClick={() => setStep("telegram")} 
+            className="w-full flex items-center gap-4 p-4 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors">
+            <div className="w-12 h-12 rounded-lg bg-[#0088cc] flex items-center justify-center flex-shrink-0">
+              <svg viewBox="0 0 24 24" className="w-6 h-6 fill-white">
+                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.869 4.332-2.97-.924c-.644-.203-.658-.644.135-.954l11.593-4.47c.54-.196 1.011.131.832.942z" />
+              </svg>
+            </div>
+            <div className="flex-1 text-left">
+              <p className="text-sm font-semibold text-gray-900">Telegram</p>
+              <p className="text-xs text-gray-500">Send message</p>
+            </div>
+          </button>
+
+          <div className="grid grid-cols-2 gap-3 pt-2">
+            <button className="flex flex-col items-center gap-2 p-4 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors">
+              <div className="w-10 h-10 rounded-lg bg-blue-500 flex items-center justify-center">
+                <svg className="w-5 h-5 fill-white" viewBox="0 0 24 24">
+                  <path d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+              <span className="text-[10px] text-gray-700 text-center font-medium">Smart<br/>Sidebar</span>
+              <span className="text-[9px] text-gray-400">Save</span>
+            </button>
+
+            <button className="flex flex-col items-center gap-2 p-4 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors">
+              <div className="w-10 h-10 rounded-lg bg-blue-400 flex items-center justify-center">
+                <svg className="w-5 h-5 fill-white" viewBox="0 0 24 24">
+                  <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5.04-6.71l-2.75 3.54h2.86v4h2v-4h2.86l-2.75-3.54 1.96-2.36H9.5V4h-2v4H4.64l2.75 3.54-1.96 2.36H6.3v4h2v-4h2.86z" />
+                </svg>
+              </div>
+              <span className="text-[10px] text-gray-700 text-center font-medium">My<br/>Files</span>
+              <span className="text-[9px] text-gray-400">Save</span>
+            </button>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            <button className="flex flex-col items-center gap-2 p-4 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors">
+              <div className="w-10 h-10 rounded-lg bg-purple-500 flex items-center justify-center">
+                <svg className="w-5 h-5 fill-white" viewBox="0 0 24 24">
+                  <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4c-1.48 0-2.85.43-4.01 1.17l1.46 1.46C10.21 5.23 11.08 5 12 5c3.04 0 5.5 2.46 5.5 5.5v.5H19c1.66 0 3 1.34 3 3 0 1.13-.64 2.11-1.56 2.62l1.45 1.45c.9-.86 1.48-2.04 1.48-3.36 0-.77-.18-1.5-.48-2.15z" />
+                </svg>
+              </div>
+              <span className="text-[10px] text-gray-700 text-center font-medium">Link to<br/>Windows</span>
+              <span className="text-[9px] text-gray-400">Send</span>
+            </button>
+
+            <button className="flex flex-col items-center gap-2 p-4 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors">
+              <div className="w-10 h-10 rounded-lg bg-cyan-500 flex items-center justify-center">
+                <svg className="w-5 h-5 fill-white" viewBox="0 0 24 24">
+                  <path d="M16.6915026,12.4744748 L3.50612381,13.2599618 C3.19218622,13.2599618 3.03521743,13.4170592 3.03521743,13.5741566 L1.15159189,20.0151496 C0.8376543,20.8006365 0.99,21.89 1.77946707,22.52 C2.41,22.99 3.50612381,23.1 4.13399899,22.99 L21.714504,14.0454487 C22.6563168,13.5741566 23.1272231,12.6315722 22.9702544,11.6889879 L4.13399899,1.01554701 C3.34915502,0.9 2.40734225,0.9 1.77946707,1.4686203 C0.994623095,2.03684061 0.837654326,3.12632979 1.15159189,3.91181669 L3.03521743,10.3528097 C3.03521743,10.5099071 3.34915502,10.6670045 3.50612381,10.6670045 L16.6915026,11.4524914 C16.6915026,11.4524914 17.1624089,11.4524914 17.1624089,12.0211117 C17.1624089,12.4744748 16.6915026,12.4744748 16.6915026,12.4744748 Z" />
+                </svg>
+              </div>
+              <span className="text-[10px] text-gray-700 text-center font-medium">Telegram<br/>App</span>
+              <span className="text-[9px] text-gray-400">Share</span>
+            </button>
+          </div>
+        </div>
+
+        <div className="px-5 py-4 border-t border-gray-200 flex gap-3 sticky bottom-0 bg-gray-50">
+          <button onClick={onClose} className="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100">Cancel</button>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 // ─── Fraction Popover Input ───────────────────────────────────────────────────
 function FractionInput({ value, onChange }: { value: string; onChange: (v: string) => void }) {
@@ -174,7 +339,7 @@ function DescEditor({ value, onChange }: { value: string; onChange: (v: string) 
         <div><span className={lbl}>Frac</span><FractionInput value={parts.f2} onChange={(v) => update("f2", v)} /></div>
         <div><span className={lbl}>Unit</span>
           <select className={inCls} style={{ width: 52 }} value={parts.unit2} onChange={(e) => update("unit2", e.target.value)}>
-            {UNIT_OPTIONS.map((u) => <option key={u} value={u}>{u || "���"}</option>)}
+            {UNIT_OPTIONS.map((u) => <option key={u} value={u}>{u || "—"}</option>)}
           </select>
         </div>
         <div className="pb-1 px-0.5"><span className={lbl}>&nbsp;</span><span className="text-xs font-bold text-gray-500">—</span></div>
@@ -318,33 +483,33 @@ function renderDiagramHTML(diagram: DiagramData): string {
   const d = diagram.dims
   if (diagram.shape === "channel") {
     return `<svg width="260" height="170" viewBox="0 0 260 170" display="block" xmlns="http://www.w3.org/2000/svg">
-      <text x="130" y="16" text-anchor="middle" dominant-baseline="middle" font-size="14" fill="#111" font-weight="bold">${d.top || ""}</text>
+      <text x="130" y="16" text-anchor="middle" font-size="14" fill="#111" font-weight="bold">${d.top || ""}</text>
       <line x1="78" y1="28" x2="182" y2="28" stroke="#333" stroke-width="2.5"/>
       <line x1="78" y1="28" x2="52" y2="120" stroke="#333" stroke-width="2.5"/>
       <line x1="182" y1="28" x2="208" y2="120" stroke="#333" stroke-width="2.5"/>
       <line x1="38" y1="120" x2="222" y2="120" stroke="#333" stroke-width="2.5"/>
-      <text x="8" y="74" font-size="13" fill="#111" font-weight="bold" dominant-baseline="middle">${d.height || ""}</text>
-      <text x="130" y="155" text-anchor="middle" dominant-baseline="middle" font-size="14" fill="#111" font-weight="bold">${d.bottom || ""}</text>
-      <text x="252" y="74" font-size="13" fill="#111" font-weight="bold" text-anchor="end" dominant-baseline="middle">${d.length || ""}</text>
+      <text x="8" y="82" font-size="13" fill="#111" font-weight="bold">${d.height || ""}</text>
+      <text x="130" y="155" text-anchor="middle" font-size="14" fill="#111" font-weight="bold">${d.bottom || ""}</text>
+      <text x="252" y="82" font-size="13" fill="#111" font-weight="bold" text-anchor="end">${d.length || ""}</text>
     </svg>`
   }
   if (diagram.shape === "lbracket") {
-    // FIXED: left label now centered on lx=80 so it never clips, with proper baseline alignment
+    // FIXED: left label now centered on lx=80 so it never clips
     return `<svg width="340" height="160" viewBox="0 0 340 160" display="block" xmlns="http://www.w3.org/2000/svg">
       <line x1="80" y1="16" x2="80" y2="118" stroke="#222" stroke-width="3"/>
       <line x1="80" y1="118" x2="310" y2="118" stroke="#222" stroke-width="3"/>
       <line x1="200" y1="32" x2="200" y2="118" stroke="#222" stroke-width="3"/>
-      <text x="73" y="67" font-size="13" fill="#444" text-anchor="end" dominant-baseline="middle">${d.leftH || ""}</text>
-      <text x="214" y="75" font-size="13" fill="#444" text-anchor="start" dominant-baseline="middle">${d.rightH || ""}</text>
-      <text x="140" y="138" font-size="13" fill="#444" text-anchor="middle" dominant-baseline="middle">${d.inner || ""}</text>
-      <text x="256" y="138" font-size="13" fill="#444" text-anchor="middle" dominant-baseline="middle">${d.bottomW || ""}</text>
+      <text x="80" y="72" font-size="13" fill="#444" text-anchor="middle">${d.leftH || ""}</text>
+      <text x="214" y="80" font-size="13" fill="#444" text-anchor="start">${d.rightH || ""}</text>
+      <text x="140" y="148" font-size="13" fill="#444" text-anchor="middle">${d.inner || ""}</text>
+      <text x="256" y="148" font-size="13" fill="#444" text-anchor="middle">${d.bottomW || ""}</text>
     </svg>`
   }
   if (diagram.shape === "rect") {
     return `<svg width="200" height="110" viewBox="0 0 200 110" display="block" xmlns="http://www.w3.org/2000/svg">
       <rect x="28" y="14" width="144" height="72" fill="none" stroke="#333" stroke-width="2.5" rx="2"/>
-      <text x="100" y="11" text-anchor="middle" dominant-baseline="middle" font-size="13" fill="#555" font-weight="bold">${d.width || ""}</text>
-      <text x="182" y="50" font-size="12" fill="#555" font-weight="bold" dominant-baseline="middle">${d.height || ""}</text>
+      <text x="100" y="11" text-anchor="middle" font-size="13" fill="#555" font-weight="bold">${d.width || ""}</text>
+      <text x="182" y="56" font-size="12" fill="#555" font-weight="bold">${d.height || ""}</text>
     </svg>`
   }
   if (diagram.shape === "custom") return `<span style="font-size:14px;color:#555;">${d.note || ""}</span>`
@@ -464,8 +629,9 @@ function PreviewModal({ data, onClose, onDownload, generating }: { data: Quotati
           <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-lg"><X className="w-5 h-5" /></button>
         </div>
         <div className="p-5">
-          <div className="mb-5 flex items-center gap-3 border-b-2 border-[#40B7FF] pb-3">
-            <img src={`data:image/jpeg;base64,${SGH_LOGO_B64}`} alt="SGH Logo" style={{ width: 70, height: 50, objectFit: "contain", flexShrink: 0 }} />
+          <div className="mb-5 flex items-center gap-4 border-b-2 border-[#40B7FF] pb-3">
+  <img src={SGH_LOGO_SRC} alt="SGH Logo" 
+    style={{ width: 65, height: 65, objectFit: "contain", flexShrink: 0 }} />
             <div className="flex-1 min-w-0">
               <h2 className="text-base font-bold text-[#C62828] mb-0.5 text-center">SELVA GANAPATHI HYDRAULICS</h2>
               <p className="text-[10px] text-[#40B7FF] text-center truncate">487, Gandhi Nagar Road, KUNNATHUR - 638103, Tirupur (Dt).</p>
@@ -547,7 +713,7 @@ function InlineEditRow({ item, idx, onSave, onCancel }: { item: QuotationItem; i
   )
 }
 
-// ─── Add Item Panel ────────────────────────���──────────────────────────────────
+// ─── Add Item Panel ───────────────────────────────────────────────────────────
 function AddItemPanel({ onAdd }: { onAdd: (item: { sku: string; desc: string; mode: string }) => void }) {
   const [mode, setMode] = useState("text")
   const [sku, setSku] = useState("")
@@ -623,6 +789,7 @@ export default function QuotationGenerator() {
   const [previewOpen, setPreviewOpen] = useState(false)
   const [generating, setGenerating] = useState(false)
   const [nextId, setNextId] = useState(25)
+  const [showWhatsApp, setShowWhatsApp] = useState(false)
 
   const upField = <K extends keyof QuotationData>(f: K, v: QuotationData[K]) => setData((p) => ({ ...p, [f]: v }))
   const upItems = (fn: (items: QuotationItem[]) => QuotationItem[]) => setData((p) => ({ ...p, items: fn(p.items) }))
@@ -698,7 +865,7 @@ export default function QuotationGenerator() {
 <body>
 <div class="page">
   <div class="header-inner">
-    <img class="logo" src="data:image/jpeg;base64,${SGH_LOGO_B64}" alt="SGH Logo" />
+   <img class="logo" src="/images/logo.png" alt="SGH Logo" />
     <div class="header-text">
       <h2>SELVA GANAPATHI HYDRAULICS</h2>
       <p>487, Gandhi Nagar Road, KUNNATHUR - 638103, Tirupur (Dt).</p>
@@ -741,32 +908,9 @@ export default function QuotationGenerator() {
       const mmPerPx = 210 / 794; const finalW = 210; const finalH = Math.ceil(inner.scrollHeight * mmPerPx)
       const pdf = new jsPDFModule({ unit: "mm", format: [finalW, finalH], orientation: "portrait" })
       pdf.addImage(imgData, "JPEG", 0, 0, finalW, finalH)
-      const pdfBlob = pdf.output("blob")
-      const fileName = `${data.machineName.replace(/\s+/g, "_")}_Quotation_${data.date.replace(/\//g, "-")}.pdf`
+      pdf.save(`${data.machineName.replace(/\s+/g, "_")}_Quotation_${data.date.replace(/\//g, "-")}.pdf`)
       document.body.removeChild(el)
-      
-      // Trigger native share dialog if Web Share API is available
-      if (navigator.share) {
-        const file = new File([pdfBlob], fileName, { type: "application/pdf" })
-        await navigator.share({
-          files: [file],
-          title: "Share Quotation",
-          text: `Quotation for ${data.machineName}`
-        })
-      } else {
-        // Fallback: download the PDF using data URL (works in mobile apps)
-        const reader = new FileReader()
-        reader.onload = () => {
-          const dataUrl = reader.result as string
-          const a = document.createElement("a")
-          a.href = dataUrl
-          a.download = fileName
-          document.body.appendChild(a)
-          a.click()
-          document.body.removeChild(a)
-        }
-        reader.readAsDataURL(pdfBlob)
-      }
+      setShowWhatsApp(true)
     } catch (err) {
       console.error(err); alert("PDF generation failed.")
     } finally {
@@ -817,8 +961,8 @@ export default function QuotationGenerator() {
             <span className="bg-[#C62828] text-white text-xs font-semibold px-3 py-1 rounded-full">{data.items.length} items</span>
           </div>
 
-          {/* Table header */}
-          <div className="grid grid-cols-12 gap-2 px-3 py-2 bg-gray-50 rounded-t-lg border border-gray-200 text-xs font-semibold text-gray-700">
+          {/* Desktop header */}
+          <div className="hidden sm:grid grid-cols-12 gap-2 px-3 py-2 bg-gray-50 rounded-t-lg border border-gray-200 text-xs font-semibold text-gray-700">
             <div className="col-span-1">S.No</div>
             <div className="col-span-2">Material</div>
             <div className="col-span-6">Length</div>
@@ -832,35 +976,63 @@ export default function QuotationGenerator() {
                 <InlineEditRow key={item.id} item={item} idx={idx} onSave={(vals) => saveEdit(item.id, vals)} onCancel={() => setEditingId(null)} />
               ) : (
                 <div key={item.id} className="border-b border-gray-200 hover:bg-gray-50 transition-colors">
-                  {/* Table row */}
-                  <div className="grid grid-cols-12 gap-2 px-3 py-2 items-center">
-                    <div className="col-span-1 text-xs sm:text-xs font-semibold text-gray-400">{idx + 1}</div>
-                    <div className="col-span-2 text-xs sm:text-xs font-semibold text-gray-700 truncate">{item.sku}</div>
-                    <div className="col-span-6 text-xs sm:text-sm flex items-center">
-                      {item.diagram ? (
-                        <div className="flex items-start justify-start gap-3 w-full">
-                          <div className="flex-shrink-0 pt-0.5">
-                            <DiagramRenderer diagram={item.diagram} size="inline" />
-                          </div>
-                          <div className="flex flex-col gap-1 justify-start">
-                            <button onClick={() => setDiagModalItem(item)} className="text-xs text-blue-500 hover:text-blue-700 underline text-left">Edit diagram</button>
-                            <button onClick={() => removeDiagram(item.id)} className="text-xs text-red-400 hover:text-red-600 text-left">Remove</button>
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="overflow-x-auto">
+                  {/* Mobile view */}
+                  <div className="sm:hidden flex items-start gap-2 px-3 py-2.5">
+                    <span className="text-xs font-semibold text-gray-400 w-5 flex-shrink-0 pt-0.5">{idx + 1}</span>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-xs font-bold text-gray-700 bg-gray-100 px-2 py-0.5 rounded">{item.sku}</span>
+                        {(item.diagram ? item.count : parseDescString(item.desc).count) && (
+                          <span className="text-xs text-gray-500">
+                            × <span className="font-bold text-gray-700">{item.diagram ? item.count : parseDescString(item.desc).count}</span> No
+                          </span>
+                        )}
+                      </div>
+                      <div className="overflow-x-auto">
+                        {item.diagram ? (
+                          <DiagramRenderer diagram={item.diagram} size="inline" />
+                        ) : (
                           <DescDisplay desc={item.desc} showCount={false} />
+                        )}
+                      </div>
+                      {item.diagram && (
+                        <div className="flex gap-3 mt-1.5">
+                          <button onClick={() => setDiagModalItem(item)} className="text-xs text-blue-500 hover:text-blue-700 underline">Edit diagram</button>
+                          <button onClick={() => removeDiagram(item.id)} className="text-xs text-red-400 hover:text-red-600">Remove</button>
                         </div>
                       )}
                     </div>
+                    <div className="flex gap-1 flex-shrink-0">
+                      <button onClick={() => setEditingId(item.id)} className="p-1.5 text-blue-500 hover:bg-blue-50 rounded"><Edit2 className="w-3.5 h-3.5" /></button>
+                      <button onClick={() => deleteItem(item.id)} className="p-1.5 text-red-500 hover:bg-red-50 rounded"><Trash2 className="w-3.5 h-3.5" /></button>
+                    </div>
+                  </div>
+
+                  {/* Desktop view */}
+                  <div className="hidden sm:grid grid-cols-12 gap-2 px-3 py-2 items-center">
+                    <div className="col-span-1 text-xs font-semibold text-gray-400">{idx + 1}</div>
+                    <div className="col-span-2 text-xs font-semibold text-gray-700">{item.sku}</div>
+                    <div className="col-span-6">
+                      {item.diagram ? (
+                        <div className="flex items-center gap-3">
+                          <DiagramRenderer diagram={item.diagram} size="inline" />
+                          <div className="flex flex-col gap-1">
+                            <button onClick={() => setDiagModalItem(item)} className="text-xs text-blue-500 hover:text-blue-700 underline">Edit diagram</button>
+                            <button onClick={() => removeDiagram(item.id)} className="text-xs text-red-400 hover:text-red-600">Remove</button>
+                          </div>
+                        </div>
+                      ) : (
+                        <DescDisplay desc={item.desc} showCount={false} />
+                      )}
+                    </div>
                     <div className="col-span-1 text-center">
-                      <span className="text-xs sm:text-xs font-semibold text-gray-700">
+                      <span className="text-xs font-semibold text-gray-700">
                         {item.diagram ? item.count : parseDescString(item.desc).count}
                       </span>
                     </div>
                     <div className="col-span-2 flex gap-1 justify-end">
-                      <button onClick={() => setEditingId(item.id)} className="p-1.5 text-blue-500 hover:bg-blue-50 rounded transition-colors"><Edit2 className="w-3.5 sm:w-3.5 h-3.5 sm:h-3.5" /></button>
-                      <button onClick={() => deleteItem(item.id)} className="p-1.5 text-red-500 hover:bg-red-50 rounded transition-colors"><Trash2 className="w-3.5 sm:w-3.5 h-3.5 sm:h-3.5" /></button>
+                      <button onClick={() => setEditingId(item.id)} className="p-1.5 text-blue-500 hover:bg-blue-50 rounded"><Edit2 className="w-3.5 h-3.5" /></button>
+                      <button onClick={() => deleteItem(item.id)} className="p-1.5 text-red-500 hover:bg-red-50 rounded"><Trash2 className="w-3.5 h-3.5" /></button>
                     </div>
                   </div>
                 </div>
@@ -881,12 +1053,19 @@ export default function QuotationGenerator() {
             className="w-full sm:w-auto px-6 py-3 bg-[#C62828] hover:bg-[#B71C1C] text-white rounded-lg font-semibold transition-colors flex items-center justify-center gap-2 disabled:opacity-50">
             {generating ? (<><div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />Generating...</>) : (<><Download className="w-5 h-5" />Download PDF</>)}
           </button>
+          <button onClick={() => setShowWhatsApp(true)}
+            className="w-full sm:w-auto px-6 py-3 bg-[#25D366] hover:bg-[#20BA5A] text-white rounded-lg font-semibold transition-colors flex items-center justify-center gap-2">
+            <svg viewBox="0 0 24 24" className="w-5 h-5 fill-white">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+            </svg>
+            Share on WhatsApp
+          </button>
         </div>
       </div>
 
       {diagModalItem && <DiagramModal item={diagModalItem} onSave={saveDiagram} onClose={() => setDiagModalItem(null)} />}
       {previewOpen && <PreviewModal data={data} onClose={() => setPreviewOpen(false)} onDownload={() => { setPreviewOpen(false); downloadPDF() }} generating={generating} />}
-
+        {showWhatsApp && <ShareModal onClose={() => setShowWhatsApp(false)} machineName={data.machineName} />}
     </div>
   )
 }
