@@ -5,75 +5,7 @@ import { Plus, Trash2, Download, Eye, Edit2, X, Check } from "lucide-react"
 
 const SGH_LOGO_B64 = "/9j/4AAQSkZJRgABAQAASABIAAD/4QBMRXhpZgAATU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAACWKADAAQAAAABAAABaAAAAAD/wAARCAFoAlgDAREAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9sAQwACAgICAgIDAgIDBQMDAwUGBQUFBQYIBgYGBgYICggICAgICAoKCgoKCgoKDAwMDAwMDg4ODg4PDw8PDw8PDw8P/9sAQwECAwMEBAQHBAQHEAsJCxAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQ/90ABABL/9oADAMBAAIRAxEAPwD9/KACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoA/9D9/KACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoA/9H9/KACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoA/9L9/KACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoA/9P9/KACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKAE3L60AGRQBzOoeNPCGkbv7W1uxsdnX7RcxRY/77YUAcxL8a/g5Ids/jvQYz6NqloP5yUAT23xf+E96/l2fjPRbhvSPUrZv5SUAdlp+taRqy7tLvYbtfWGRZB+ak0AamRQAtABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAH//1P38oAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoA/9X9/KACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAz9T1PTtHsptS1a6isrS3XfJNPIscaKO7MxAA+poA+B/i1/wAFOf2SvhWZrSHxM3jDUYtw+zaDGLwEqccXDNHbHn0lJ9utAH5u/Ej/AILY+N74yWvwm8AWOlJjarzq88l45Jxz5MPkhCP+ujj69aAPiHxr/wAFKf2x/G8jrN8QJtGtz92HSoIbIA4xkSogm/8AIh/GgD5e8R/Gj4ueMnkb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oAKACgAoAKACgAoAKACgAoAKACgAoA/9f9/KACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgDn9c8K+GfEsQh8RaRZ6qiAhVurWOYD6bwaAOGl+CXwZmk82XwPoLN9dLtQPyVABQBZtfhN8KbKTzLPwdosT+qadbrz+EYoA7Kw0rS9LjEOmWsNogGAIY1QAf8BApgX6ACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoA/9D9/KACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoA/9H9/KACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoA/9L9/KACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoA/9P9/KACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKAE3L60AGRQBzOoeNPCGkbv7W1uxsdnX7RcxRY/77YUAcxL8a/g5Ids/jvQYz6NqloP5yUAT23xf+E96/l2fjPRbhvSPUrZv5SUAdlp+taRqy7tLvYbtfWGRZB+ak0AamRQAtABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAFABQAUAH//Q/fygAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKACgAoAKA"
 
-// ─── Share Modal ─────────────────────────────────────────────────────────────
-function ShareModal({ onClose, machineName }: { onClose: () => void; machineName: string }) {
-  const [phone, setPhone] = useState("")
-  const [message, setMessage] = useState(`Hi, please find the quotation for ${machineName} attached.`)
 
-  const handleWhatsAppShare = () => {
-    const cleanPhone = phone.replace(/\D/g, "")
-    const encodedMsg = encodeURIComponent(message)
-    const url = cleanPhone ? `https://wa.me/${cleanPhone}?text=${encodedMsg}` : `https://wa.me/?text=${encodedMsg}`
-    window.open(url, "_blank")
-    onClose()
-  }
-
-  return (
-    <div className="fixed inset-0 bg-black/50 flex items-end sm:items-center justify-center z-50 p-0 sm:p-4">
-      <div className="bg-white rounded-t-2xl sm:rounded-xl shadow-2xl w-full sm:max-w-md max-h-[90vh] overflow-y-auto">
-        <div className="px-5 py-4 border-b border-gray-200 flex items-center justify-between sticky top-0 bg-white z-10">
-          <div>
-            <h2 className="text-base font-bold text-gray-900">Share Quotation</h2>
-            <p className="text-xs text-gray-500">PDF downloaded successfully</p>
-          </div>
-          <button onClick={onClose} className="p-1 hover:bg-gray-100 rounded-lg"><X className="w-5 h-5 text-gray-500" /></button>
-        </div>
-        
-        <div className="p-5 space-y-3">
-          {/* WhatsApp Share Section */}
-          <div className="border border-gray-200 rounded-lg p-4 space-y-3">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-lg bg-[#25D366] flex items-center justify-center flex-shrink-0">
-                <svg viewBox="0 0 24 24" className="w-6 h-6 fill-white">
-                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                </svg>
-              </div>
-              <div>
-                <p className="text-sm font-semibold text-gray-900">Share via WhatsApp</p>
-                <p className="text-xs text-gray-500">Send with message</p>
-              </div>
-            </div>
-            
-            <div>
-              <label className="block text-xs font-medium text-gray-600 mb-1.5">Phone number <span className="text-gray-400">(optional)</span></label>
-              <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="e.g. 919876543210"
-                className="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#25D366]" />
-            </div>
-            
-            <div>
-              <label className="block text-xs font-medium text-gray-600 mb-1.5">Message</label>
-              <textarea value={message} onChange={(e) => setMessage(e.target.value)} rows={3}
-                className="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#25D366] resize-none" />
-            </div>
-            
-            <button onClick={handleWhatsAppShare} className="w-full px-4 py-2.5 bg-[#25D366] text-white rounded-lg text-sm font-semibold hover:bg-[#20BA5A] flex items-center justify-center gap-2">
-              <svg viewBox="0 0 24 24" className="w-4 h-4 fill-white">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-              </svg>
-              Open WhatsApp
-            </button>
-          </div>
-
-          <p className="text-[11px] text-gray-500">Note: WhatsApp doesn't allow direct file sharing from web. Please manually attach the downloaded PDF in the WhatsApp chat.</p>
-        </div>
-
-        <div className="px-5 py-4 border-t border-gray-200 flex gap-3 sticky bottom-0 bg-gray-50">
-          <button onClick={onClose} className="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100">Done</button>
-        </div>
-      </div>
-    </div>
-  )
-}
 
   const handleTelegramShare = () => {
     const encodedMsg = encodeURIComponent(message)
@@ -795,7 +727,7 @@ function InlineEditRow({ item, idx, onSave, onCancel }: { item: QuotationItem; i
   )
 }
 
-// ─── Add Item Panel ───────────────────────────────────────────────────────────
+// ─── Add Item Panel ────────────────────────���──────────────────────────────────
 function AddItemPanel({ onAdd }: { onAdd: (item: { sku: string; desc: string; mode: string }) => void }) {
   const [mode, setMode] = useState("text")
   const [sku, setSku] = useState("")
@@ -990,9 +922,30 @@ export default function QuotationGenerator() {
       const mmPerPx = 210 / 794; const finalW = 210; const finalH = Math.ceil(inner.scrollHeight * mmPerPx)
       const pdf = new jsPDFModule({ unit: "mm", format: [finalW, finalH], orientation: "portrait" })
       pdf.addImage(imgData, "JPEG", 0, 0, finalW, finalH)
-      pdf.save(`${data.machineName.replace(/\s+/g, "_")}_Quotation_${data.date.replace(/\//g, "-")}.pdf`)
+      const pdfBlob = pdf.output("blob")
+      const fileName = `${data.machineName.replace(/\s+/g, "_")}_Quotation_${data.date.replace(/\//g, "-")}.pdf`
       document.body.removeChild(el)
-      setShowWhatsApp(true)
+      
+      // Trigger native share dialog if Web Share API is available
+      if (navigator.share) {
+        const file = new File([pdfBlob], fileName, { type: "application/pdf" })
+        await navigator.share({
+          files: [file],
+          title: "Share Quotation",
+          text: `Quotation for ${data.machineName}`
+        })
+      } else {
+        // Fallback: download the PDF
+        const url = URL.createObjectURL(pdfBlob)
+        const a = document.createElement("a")
+        a.href = url
+        a.download = fileName
+        document.body.appendChild(a)
+        a.click()
+        document.body.removeChild(a)
+        URL.revokeObjectURL(url)
+        setShowWhatsApp(true)
+      }
     } catch (err) {
       console.error(err); alert("PDF generation failed.")
     } finally {
@@ -1147,7 +1100,7 @@ export default function QuotationGenerator() {
 
       {diagModalItem && <DiagramModal item={diagModalItem} onSave={saveDiagram} onClose={() => setDiagModalItem(null)} />}
       {previewOpen && <PreviewModal data={data} onClose={() => setPreviewOpen(false)} onDownload={() => { setPreviewOpen(false); downloadPDF() }} generating={generating} />}
-        {showWhatsApp && <ShareModal onClose={() => setShowWhatsApp(false)} machineName={data.machineName} />}
+
     </div>
   )
 }
