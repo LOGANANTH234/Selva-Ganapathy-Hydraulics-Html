@@ -463,8 +463,8 @@ function PreviewModal({ data, onClose, onDownload, generating }: { data: Quotati
           <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-lg"><X className="w-5 h-5" /></button>
         </div>
         <div className="p-5">
-          <div className="mb-5 flex items-center gap-3 border-b-2 border-[#40B7FF] pb-3">
-<img src={SGH_LOGO_SRC} alt="SGH Logo" style={{ width: 70, height: 70, objectFit: "contain", flexShrink: 0 }} />
+     <div className="mb-5 flex items-center gap-2 border-b-2 border-[#40B7FF] pb-3 pl-3">
+  <img src={SGH_LOGO_SRC} alt="SGH Logo" style={{ width: 65, height: 55, objectFit: "contain", flexShrink: 0 }} />
             <div className="flex-1 min-w-0">
               <h2 className="text-base font-bold text-[#C62828] mb-0.5 text-center">SELVA GANAPATHI HYDRAULICS</h2>
               <p className="text-[10px] text-[#40B7FF] text-center truncate">487, Gandhi Nagar Road, KUNNATHUR - 638103, Tirupur (Dt).</p>
@@ -679,7 +679,7 @@ export default function QuotationGenerator() {
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #111; }
     .page { width: 794px; padding: 32px 40px; }
-    .header-inner { display: flex; align-items: center; gap: 16px; border-bottom: 2.5px solid #40B7FF; padding-bottom: 8px; margin-bottom: 24px; }
+.header-inner { display: flex; align-items: center; gap: 8px; border-bottom: 2.5px solid #40B7FF; padding-bottom: 8px; margin-bottom: 24px; padding-left: 12px; }
     .logo { width: 70px; height: 70px; object-fit: contain; flex-shrink: 0; }
     .header-text { flex: 1; }
     .header-text h2 { font-size: 22px; font-weight: 900; color: #C62828; letter-spacing: 0.5px; margin-bottom: 5px; text-align: center; }
